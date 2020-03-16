@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web
         .configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web
         .configuration.WebSecurityConfigurerAdapter;
-
 import javax.sql.DataSource;
 
 @Configuration
@@ -21,11 +20,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource);
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.anonymous().and().csrf().disable();
+        http.csrf().disable()
+            .authorizeRequests().anyRequest().authenticated()
+            .and()
+            .httpBasic();
     }
 }

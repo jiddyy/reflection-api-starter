@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT NOT NULL
 );
 
+ALTER TABLE users ADD COLUMN IF NOT EXISTS enabled BOOLEAN NOT NULL DEFAULT true;
+
 INSERT INTO users (username, password)
 VALUES ('student', 'testpass'), ('student2', 'testpass')
 ON CONFLICT DO NOTHING;
@@ -20,6 +22,10 @@ CREATE TABLE IF NOT EXISTS authorities (
 );
 
 CREATE INDEX ON authorities (username);
+
+INSERT INTO authorities (username, authority)
+values ('student', 'USER'), ('student2', 'USER')
+ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS groups (
     id SERIAL PRIMARY KEY,
@@ -35,6 +41,8 @@ CREATE TABLE IF NOT EXISTS group_authorities (
     group_id INTEGER PRIMARY KEY NOT NULL,
     authority TEXT NOT NULL CHECK (authority <> '')
 );
+
+UPDATE users SET password = '{noop}testpass';
 
 -----------------------------------------------------
 ---- Put your tables below
