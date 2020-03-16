@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 ALTER TABLE users ADD COLUMN IF NOT EXISTS enabled BOOLEAN NOT NULL DEFAULT true;
 
 INSERT INTO users (username, password)
-VALUES ('student', 'testpass'), ('student2', 'testpass')
+VALUES ('student', 'testpass'), ('student2', 'testpass'), ('admin', 'testpass')
 ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS authorities (
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS authorities (
 CREATE INDEX ON authorities (username);
 
 INSERT INTO authorities (username, authority)
-values ('student', 'USER'), ('student2', 'USER')
+values ('student', 'USER'), ('student2', 'USER'), ('admin', 'ADMIN'), ('admin', 'USER')
 ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS groups (
