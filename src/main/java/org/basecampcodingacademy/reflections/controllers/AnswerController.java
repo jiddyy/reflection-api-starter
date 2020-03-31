@@ -6,17 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 public class AnswerController {
     @Autowired
     public AnswerRepository answers;
 
     @GetMapping("/responses/{responseId}/answers")
-    public List<Answer> index(Answer answer, @PathVariable Integer responseId) {
+    public void index(Answer answer, @PathVariable Integer responseId) {
         answer.responseId = responseId;
-        return (List<Answer>) answers.findAllForResponse(answer);
     }
 
     @PostMapping("/responses/{responseId}/answers")
